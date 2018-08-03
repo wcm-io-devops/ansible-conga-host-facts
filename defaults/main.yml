@@ -1,0 +1,5 @@
+# The ansible host pattern
+# conga_host_facts_pattern:
+
+# The aws region to use when facts should be retrieved via ec2
+conga_host_facts_aws_region: "eu-west-1"
