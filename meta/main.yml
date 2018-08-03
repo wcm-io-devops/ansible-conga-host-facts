@@ -1,10 +1,10 @@
 galaxy_info:
   author: Tobias Richter
-  description: Retrieved conga host facts from the inventory
+  description: Utility role for determing facts for conga ansible automation based on inventory variables
   company: pro!vision
   issue_tracker_url: https://wcm-io.atlassian.net
   license: Apache
-  min_ansible_version: 2.0
+  min_ansible_version: 2.4.6
 
   platforms:
   - name: Ubuntu
