@@ -1,4 +1,4 @@
-# wcm-io-devops.conga-host-facts
+# wcm_io_devops.conga_host_facts
 
 This role provides conga facts based on instance tags.
 
@@ -81,7 +81,7 @@ This playbook set the conga host facts for the hosts identified by the tasg
   pre_tasks:
     - name: Set conga host facts
       include_role:
-        name: wcm-io-devops.conga-host-facts
+        name: wcm_io_devops.conga_host_facts
       vars:
         conga_host_facts_pattern: "tag_conga_variants_aem-author"
 ```

@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: conga_host_facts
   author: Tobias Richter
   description: Utility role for determing facts for conga ansible automation based on inventory variables
   company: pro!vision
