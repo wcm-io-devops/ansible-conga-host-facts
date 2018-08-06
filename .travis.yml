@@ -1,2 +1,8 @@
+language: python
+python:
+ - "2.7"
+
+script: "echo 'galaxy import'"
+
 notifications:
     webhooks: https://galaxy.ansible.com/api/v1/notifications/
