@@ -1,5 +1,6 @@
 ---
 language: python
+cache: pip
 python: "2.7"
 
 # Use the new container infrastructure
