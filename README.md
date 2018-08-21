@@ -71,17 +71,23 @@ The aws region to use when facts are retrieved using ec2_instance_facts.
 
 ## Example
 
-This playbook set the conga host facts for the hosts identified by the tasg
-* Project = testproject
-* Env = dev
-* conga_variants = aem-author,aem-publish
+An example can be found below [tests](tests). The tests use the
+[conga-aem-definitions](https://github.com/wcm-io-devops/conga-aem-definitions)
+as CONGA configuration.
 
-```
-- hosts: "&tag_Project_testproject:&tag_Env_dev:tag_conga_variants_aem-author:tag_conga_variants_aem-publish"
-  pre_tasks:
-    - name: Set conga host facts
-      include_role:
-        name: wcm_io_devops.conga_host_facts
-      vars:
-        conga_host_facts_pattern: "tag_conga_variants_aem-author"
-```
+The playbook [test-singlehost.yml](tests/test-singlehost.yml) will
+retrieve the `conga_node` based on the `host_pattern` provided in the
+two `include_playbook` statements.
+
+The playbook [test-multihost.yml](tests/test-multihost.yml) will
+retrieve the `conga_node` based on the `host_pattern` with the value
+`aem-author:aem-publish`.
+
+Both variants include the playbook
+[include-test.yml](tests/include-test.yml) which applies the
+wcm_io_devops.conga_host_facts role, followed by the
+wcm_io_devops.conga_facts role to retrieve the conga configuration for
+the node, role and variant.
+
+Please refer to the [host_vars](tests/host_vars) and the
+[inventory](tests/inventory) files on how to configure both setups.
