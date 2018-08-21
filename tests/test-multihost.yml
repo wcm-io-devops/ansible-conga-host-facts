@@ -1,0 +1,15 @@
+- name: "Compile CONGA configuration"
+  hosts: localhost
+  vars:
+    conga_environment: test
+  roles:
+    - { role: wcm_io_devops.conga_maven,
+        conga_maven_git_repo: "https://github.com/wcm-io-devops/conga-aem-definitions",
+        conga_maven_git_branch: master,
+        conga_maven_root: example,
+        conga_maven_git_root: "{{ playbook_dir }}/git/conga-aem-definitions"
+         }
+
+- import_playbook: include-test.yml
+  vars:
+    host_pattern: "aem-author:aem-publish"

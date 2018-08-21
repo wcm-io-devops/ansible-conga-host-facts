@@ -1,8 +1,8 @@
-- name: "Initialize default facts"
+- name: "ec2: Initialize default facts"
   set_fact:
     _instance_conga_variant_node_mapping: {}
 
-- name: "Get ec2 instance facts for current instance"
+- name: "ec2: Get ec2 instance facts for current instance"
   ec2_instance_facts:
     filters:
       instance-state-name: running
@@ -12,7 +12,7 @@
   become: no
   register: _ec2_facts_instance
 
-- name: "instance facts"
+- name: "ec2: instance facts"
   set_fact:
     # convert the ec2 tags into facts (lists)
     _instance_conga_nodes: "{{ _ec2_facts_instance.instances[0].tags.conga_nodes.split(',') }}"

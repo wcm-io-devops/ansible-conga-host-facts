@@ -19,6 +19,9 @@ install:
   # Check ansible version
   - ansible --version
 
+  # Install requirements
+  - ansible-galaxy install -r tests/requirements.yml -p ./tests/requirements
+
   # Create ansible.cfg with correct roles_path
   - printf '[defaults]\nroles_path=./tests/requirements/:../' >ansible.cfg
 
@@ -26,8 +29,11 @@ script:
   # Run ansible-lint
   - ansible-lint .
 
-  # Basic role syntax check
-  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+  # test singlehost
+  - ansible-playbook tests/test-singlehost.yml -i tests/inventory/singlehost
+
+  # test multihost
+  - ansible-playbook tests/test-multihost.yml -i tests/inventory/multihost
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

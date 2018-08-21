@@ -1,0 +1,14 @@
+conga_roles:
+  - aem-cms
+
+conga_variants:
+  - aem-author
+  - aem-publish
+
+conga_nodes:
+  - aem-author
+  - aem-publish
+
+conga_variant_node_mapping:
+  - "aem-author=aem-author"
+  - "aem-publish=aem-publish"

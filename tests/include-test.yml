@@ -1,0 +1,21 @@
+- name: "Test conga host facts for {{ host_pattern }}"
+  hosts: "{{ host_pattern }}"
+  vars:
+    conga_environment: test
+    conga_role_mapping: aem-cms
+  roles:
+    - {
+        role: ansible-conga-host-facts,
+        conga_host_facts_pattern: "{{ host_pattern }}"
+      }
+    - role: wcm_io_devops.conga_facts
+  post_tasks:
+    - name: "Assert that conga_facts retrieved the correct configuration"
+      assert:
+        that:
+          - conga_role == 'aem-cms'
+          - conga_variants | length > 0
+          - host_pattern | search(conga_variants[0]) == True
+        msg:
+          - "conga_role     : '{{ conga_role }}'"
+          - "conga_variants : '{{ conga_variants }}'"

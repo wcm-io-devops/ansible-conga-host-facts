@@ -1,0 +1,9 @@
+[multihost]
+multihost-author ansible_connection=local
+multihost-publish ansible_connection=local
+
+[aem-author]
+multihost-author
+
+[aem-publish]
+multihost-publish
