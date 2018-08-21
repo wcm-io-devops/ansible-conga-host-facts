@@ -39,7 +39,8 @@ Example: `aem-author=author-dev.website1.com,aem-publish=dev.website1.com`
 When not working with a ec2 inventory the host needs some variables to
 be set.
 
-Example:
+Example for a singlehost instance with multiple nodes, roles and
+variants:
 ```yaml
 conga_roles:
   - aem-cms
