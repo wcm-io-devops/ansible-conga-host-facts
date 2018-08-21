@@ -1,6 +1,10 @@
 ---
 language: python
-cache: pip
+cache:
+  pip: true
+  directories:
+    - '$HOME/.m2/repository'
+
 python: "2.7"
 
 # Use the new container infrastructure
