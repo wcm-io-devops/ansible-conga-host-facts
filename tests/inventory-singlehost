@@ -1,0 +1,8 @@
+[singlehost]
+singlehost ansible_connection=local
+
+[aem-author]
+singlehost
+
+[aem-publish]
+singlehost
