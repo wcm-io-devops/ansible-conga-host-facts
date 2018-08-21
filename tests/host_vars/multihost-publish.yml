@@ -2,7 +2,7 @@ conga_roles:
  - aem-cms
 
 conga_variants:
- - aem-publish1
+ - aem-publish
 
 conga_nodes:
  - aem-publish

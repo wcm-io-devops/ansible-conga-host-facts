@@ -2,7 +2,7 @@ conga_roles:
  - aem-cms
 
 conga_variants:
- - aem-author1
+ - aem-author
 
 conga_nodes:
  - aem-author
