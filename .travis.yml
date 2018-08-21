@@ -33,7 +33,7 @@ script:
   - ansible-playbook tests/test-singlehost.yml -i tests/inventory-singlehost
 
   # test multihost
-  - ansible-playbook tests/test-singlehost.yml -i tests/inventory-multihost
+  - ansible-playbook tests/test-multihost.yml -i tests/inventory-multihost
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
