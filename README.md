@@ -5,6 +5,11 @@ This role provides conga facts based on instance tags.
 At the moment the following facts are retrieved:
 * conga_node
 
+> This role was developed as part of the
+> [wcm.io DevOps Ansible Automation for AEM](http://devops.wcm.io/ansible-aem/)
+> to integrate Ansible with
+> [CONGA](http://devops.wcm.io/conga/).
+
 ## Requirements
 
 This role requires Ansible 2.4.6 or higher.
