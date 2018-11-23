@@ -13,10 +13,10 @@
   assert:
     that:
       - _host_pattern_variants | length == 1
-    msg:
-      - "Use only one variant in the host pattern when setting up a singlehost instance!"
-      - "Found conga_nodes on instance: {{ _instance_conga_nodes | join(', ') }}"
-      - "Host pattern variants: {{ _host_pattern_variants | join(', ') }}"
+    msg: >
+      Use only one variant in the host pattern when setting up a singlehost instance!
+      Found conga_nodes on instance: {{ _instance_conga_nodes | join(', ') }}
+      Host pattern variants: {{ _host_pattern_variants | join(', ') }}
   when: _instance_conga_nodes | length > 1
 
 - name: "Set instance_conga_variant_node_mapping"
@@ -36,10 +36,10 @@
     assert:
       that:
         - _instance_conga_variant_node_mapping[_host_pattern_variants[0]] is defined
-      msg:
-        - "Unable to retrieve the conga_node for '{{ _host_pattern_variants[0] }}'"
-        - "Available nodes and their variant"
-        - "{{ _instance_conga_variant_node_mapping }}"
+      msg: >
+        Unable to retrieve the conga_node for '{{ _host_pattern_variants[0] }}'
+        Available nodes and their variants:
+        {{ _instance_conga_variant_node_mapping }}
 
   - name: "set conga_node (multiple nodes on one host)"
     set_fact:
