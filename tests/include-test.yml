@@ -16,6 +16,6 @@
           - conga_role == 'aem-cms'
           - conga_variants | length > 0
           - host_pattern | search(conga_variants[0]) == True
-        msg:
-          - "conga_role     : '{{ conga_role }}'"
-          - "conga_variants : '{{ conga_variants }}'"
+        msg: >
+          conga_role     : '{{ conga_role }}'
+          conga_variants : '{{ conga_variants }}'
