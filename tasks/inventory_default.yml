@@ -1,8 +1,8 @@
-- name: "default: Initialize default facts"
+- name: "default: Initialize default facts."
   set_fact:
     _instance_conga_variant_node_mapping: {}
 
-- name: "default: Set instance facts"
+- name: "default: Set instance facts."
   set_fact:
     # convert the ec2 tags into facts (lists)
     _instance_conga_nodes: "{{ conga_nodes }}"
