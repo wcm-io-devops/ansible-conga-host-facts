@@ -6,8 +6,13 @@
 - include_tasks: "inventory_ec2.yml"
   when: "'ec2' in group_names" # aws inventory is used
 
+- include_tasks: "inventory_openstack.yml"
+  when: "'openstack' in group_names" # openstack inventory is used
+
 - include_tasks: "inventory_default.yml"
-  when: "'ec2' not in group_names" # 'default' static inventory is used
+  when:
+    - "'ec2' not in group_names" # 'default' static inventory is used
+    - "'openstack' not in group_names" # 'default' static inventory is used
 
 - name: "Ensure that host pattern is only for one variant when multiple nodes exist on one machine."
   assert:
