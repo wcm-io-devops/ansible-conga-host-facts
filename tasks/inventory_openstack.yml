@@ -1,0 +1,11 @@
+- name: "openstack: Initialize default facts."
+  set_fact:
+    _instance_conga_variant_node_mapping: {}
+
+- name: "openstack: instance facts."
+  set_fact:
+    # convert the ec2 tags into facts (lists)
+    _instance_conga_nodes: "{{ hostvars[inventory_hostname].openstack.metadata.conga_nodes.split(',') }}"
+    _instance_conga_variants: "{{ hostvars[inventory_hostname].openstack.metadata.conga_variants.split(',') }}"
+    _instance_conga_variant_node_mapping_list:
+      "{{ hostvars[inventory_hostname].openstack.metadata.conga_variant_node_mapping.split(',') }}"
