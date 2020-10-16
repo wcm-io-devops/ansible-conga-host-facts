@@ -12,7 +12,7 @@ At the moment the following facts are retrieved:
 
 ## Requirements
 
-This role requires Ansible 2.4.6 or higher.
+This role requires Ansible 2.7 or higher.
 
 ### EC2 instance tags
 

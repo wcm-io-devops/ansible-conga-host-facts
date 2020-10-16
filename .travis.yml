@@ -1,17 +1,14 @@
 ---
 language: python
-cache:
-  pip: true
-  directories:
-    - '$HOME/.m2/repository'
+cache: pip
+python: "3.7"
 
 env:
   # run against latest version
   - ANSIBLE_VERSION=latest
   # run against minimal required version
-  - ANSIBLE_VERSION=2.5.*
+  - ANSIBLE_VERSION=2.7.*
 
-python: "2.7"
 
 # Use the new container infrastructure
 sudo: false
