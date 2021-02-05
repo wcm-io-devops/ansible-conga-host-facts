@@ -82,11 +82,11 @@ jobs:
 
       - name: Test singlehost.
         run: |
-          ansible-playbook tests/test-singlehost.yml -i tests/inventory/singlehost -vvvvvv
+          ansible-playbook tests/test-singlehost.yml -i tests/inventory/singlehost
 
       - name: Test multihost.
         run: |
-          ansible-playbook tests/test-multihost.yml -i tests/inventory/multihost -vvvvvv
+          ansible-playbook tests/test-multihost.yml -i tests/inventory/multihost
 
   lint:
     name: "Lint (${{ matrix.NAME }})"
@@ -149,8 +149,8 @@ jobs:
 
       - name: Test syntax.
         run: |
-          ansible-playbook tests/test-multihost.yml -i tests/inventory --syntax-check
-          ansible-playbook tests/test-singlehost.yml -i tests/inventory --syntax-check
+          ansible-playbook tests/test-singlehost.yml -i tests/inventory/singlehost --syntax-check
+          ansible-playbook tests/test-multihost.yml -i tests/inventory/multihost --syntax-check
 
   galaxy:
     name: "Ansible Galaxy import"
