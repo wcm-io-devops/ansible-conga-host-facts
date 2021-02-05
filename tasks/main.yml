@@ -20,6 +20,22 @@
     - "'ec2' not in group_names"  # 'default' static inventory is used
     - "'openstack' not in group_names"  # 'default' static inventory is used
 
+- name: Debug _host_pattern_variant step 1
+  debug:
+    var: conga_host_facts_pattern.split(':')
+    verbosity: 1
+
+- name: Debug _host_pattern_variant step 2
+  debug:
+    var: conga_host_facts_pattern.split(':') | map('regex_replace', '.*conga_variants_', '')
+    verbosity: 1
+
+- name: Debug _host_pattern_variant step 3
+  debug:
+    var: conga_host_facts_pattern.split(':') | map('regex_replace', '.*conga_variants_', '') | list
+    verbosity: 1
+
+
 - name: Debug conga_host_facts_pattern
   debug:
     var: conga_host_facts_pattern
