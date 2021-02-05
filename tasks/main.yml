@@ -1,3 +1,4 @@
+---
 - name: "Set host_pattern facts."
   set_fact:
     # get the conga_variants from the host pattern
@@ -6,15 +7,15 @@
                             | list }}"
 
 - include_tasks: "inventory_ec2.yml"
-  when: "'ec2' in group_names" # aws inventory is used
+  when: "'ec2' in group_names"  # aws inventory is used
 
 - include_tasks: "inventory_openstack.yml"
-  when: "'openstack' in group_names" # openstack inventory is used
+  when: "'openstack' in group_names"  # openstack inventory is used
 
 - include_tasks: "inventory_default.yml"
   when:
-    - "'ec2' not in group_names" # 'default' static inventory is used
-    - "'openstack' not in group_names" # 'default' static inventory is used
+    - "'ec2' not in group_names"  # 'default' static inventory is used
+    - "'openstack' not in group_names"  # 'default' static inventory is used
 
 - name: "Ensure that host pattern is only for one variant when multiple nodes exist on one machine."
   assert:
@@ -40,18 +41,18 @@
 
 - name: "multiple nodes on one host."
   block:
-  - name: "Ensure that conga_variant node_mapping contains the found host_pattern variant"
-    assert:
-      that:
-        - _instance_conga_variant_node_mapping[_host_pattern_variants[0]] is defined
-      msg: >
-        Unable to retrieve the conga_node for '{{ _host_pattern_variants[0] }}'
-        Available nodes and their variants:
-        {{ _instance_conga_variant_node_mapping }}
+    - name: "Ensure that conga_variant node_mapping contains the found host_pattern variant"
+      assert:
+        that:
+          - _instance_conga_variant_node_mapping[_host_pattern_variants[0]] is defined
+        msg: >
+          Unable to retrieve the conga_node for '{{ _host_pattern_variants[0] }}'
+          Available nodes and their variants:
+          {{ _instance_conga_variant_node_mapping }}
 
-  - name: "set conga_node (multiple nodes on one host)."
-    set_fact:
-      conga_node: "{{ _instance_conga_variant_node_mapping[_host_pattern_variants[0]] }}"
+    - name: "set conga_node (multiple nodes on one host)."
+      set_fact:
+        conga_node: "{{ _instance_conga_variant_node_mapping[_host_pattern_variants[0]] }}"
   when:
     - _host_pattern_variants | length == 1
     - _instance_conga_nodes | length > 1
