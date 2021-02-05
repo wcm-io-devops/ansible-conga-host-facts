@@ -17,6 +17,69 @@ defaults:
 
 jobs:
 
+  test:
+    name: "Test (${{ matrix.NAME }})"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - NAME: min_ansible_version
+            ANSIBLE_VERSION: "==2.7.*"
+            ANSIBLE_LINT_VERSION: "==4.2.*"
+          - NAME: latest
+            ANSIBLE_VERSION: ""
+            ANSIBLE_LINT_VERSION: ""
+
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+        with:
+          path: '${{ env.ROLE_NAME }}'
+
+      - name: Cache PIP
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.ANSIBLE_VERSION }}-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.ANSIBLE_VERSION }}-
+
+      - name: Create ansible.cfg
+        run: "printf '[defaults]\nroles_path=./tests/requirements/:../' > ansible.cfg"
+
+      - name: Install role requirements
+        uses: BSFishy/pip-action@v1
+        with:
+          requirements: "${{ env.ROLE_NAME }}/requirements.txt"
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install pip tools.
+        run: |
+          pip3 install wheel --upgrade
+
+      - name: Install test dependencies.
+        run: >
+          pip3 install
+          ansible${{ matrix.ANSIBLE_VERSION }}
+          ansible-lint${{ matrix.ANSIBLE_LINT_VERSION }}
+          --upgrade
+
+      - name: Install Galaxy requirements.
+        run: |
+          ansible-galaxy install -r tests/requirements.yml -p ./tests/requirements
+
+      - name: Test singlehost.
+        run: |
+          ansible-playbook tests/test-singlehost.yml -i tests/inventory --syntax-check
+
+      - name: Test multihost.
+        run: |
+          ansible-playbook tests/test-multihost.yml -i tests/inventory
+
   lint:
     name: "Lint (${{ matrix.NAME }})"
     runs-on: ubuntu-latest
@@ -81,11 +144,6 @@ jobs:
         run: |
           ansible-playbook tests/test-multihost.yml -i tests/inventory --syntax-check
           ansible-playbook tests/test-singlehost.yml -i tests/inventory --syntax-check
-
-      - name: Run tests.
-        run: |
-          ansible-playbook tests/test-multihost.yml -i tests/inventory
-          ansible-playbook tests/test-singlehost.yml -i tests/inventory
 
   galaxy:
     name: "Ansible Galaxy import"
