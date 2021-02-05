@@ -1,6 +1,7 @@
 ---
 - name: "Compile CONGA configuration"
   hosts: localhost
+  gather_facts: min
   vars:
     conga_environment: test
   roles:

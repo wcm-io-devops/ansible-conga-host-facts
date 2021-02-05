@@ -82,11 +82,11 @@ jobs:
 
       - name: Test singlehost.
         run: |
-          ansible-playbook tests/test-singlehost.yml -i tests/inventory -vv
+          ansible-playbook tests/test-singlehost.yml -i tests/inventory -vvvvvv
 
       - name: Test multihost.
         run: |
-          ansible-playbook tests/test-multihost.yml -i tests/inventory -vv
+          ansible-playbook tests/test-multihost.yml -i tests/inventory -vvvvvv
 
   lint:
     name: "Lint (${{ matrix.NAME }})"
