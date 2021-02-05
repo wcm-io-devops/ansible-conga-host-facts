@@ -47,10 +47,11 @@ jobs:
       - name: Create ansible.cfg
         run: "printf '[defaults]\nroles_path=./tests/requirements/:../' > ansible.cfg"
 
-      - name: Install role requirements
-        uses: BSFishy/pip-action@v1
+      # Set up environment with Java and Maven
+      - name: Setup JDK
+        uses: actions/setup-java@v1
         with:
-          requirements: "${{ env.ROLE_NAME }}/requirements.txt"
+          java-version: 8
 
       - name: Set up Python 3.
         uses: actions/setup-python@v2
@@ -68,13 +69,17 @@ jobs:
           ansible-lint${{ matrix.ANSIBLE_LINT_VERSION }}
           --upgrade
 
+      - name: Install role requirements.
+        run: |
+          pip3 install -r requirements.txt
+
       - name: Install Galaxy requirements.
         run: |
           ansible-galaxy install -r tests/requirements.yml -p ./tests/requirements
 
       - name: Test singlehost.
         run: |
-          ansible-playbook tests/test-singlehost.yml -i tests/inventory --syntax-check
+          ansible-playbook tests/test-singlehost.yml -i tests/inventory
 
       - name: Test multihost.
         run: |
