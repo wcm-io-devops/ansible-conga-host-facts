@@ -6,25 +6,38 @@
                             | map('regex_replace', '.*conga_variants_', '')
                             | list }}"
 
-- include_tasks: "inventory_ec2.yml"
+- name: "Use inventory_ec2."
+  include_tasks: "inventory_ec2.yml"
   when: "'ec2' in group_names"  # aws inventory is used
 
-- include_tasks: "inventory_openstack.yml"
+- name: "Use inventory_openstack."
+  include_tasks: "inventory_openstack.yml"
   when: "'openstack' in group_names"  # openstack inventory is used
 
-- include_tasks: "inventory_default.yml"
+- name: "Use inventory_default."
+  include_tasks: "inventory_default.yml"
   when:
     - "'ec2' not in group_names"  # 'default' static inventory is used
     - "'openstack' not in group_names"  # 'default' static inventory is used
 
+- name: Debug conga_host_facts_pattern
+  debug:
+    var: conga_host_facts_pattern
+    verbosity: 1
+
 - name: Debug _host_pattern_variants
   debug:
-    var: _host_pattern_variant
+    var: _host_pattern_variants
     verbosity: 1
 
 - name: Debug _instance_conga_nodes
   debug:
     var: _instance_conga_nodes
+    verbosity: 1
+
+- name: Debug _instance_conga_variant_node_mapping_list
+  debug:
+    var: _instance_conga_variant_node_mapping_list
     verbosity: 1
 
 - name: "Ensure that host pattern is only for one variant when multiple nodes exist on one machine."
