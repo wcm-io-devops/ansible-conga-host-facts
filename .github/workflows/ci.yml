@@ -86,16 +86,14 @@ jobs:
           pip3 install -r requirements.txt
 
       - name: Install Galaxy requirements.
-        run: |
+        run:
           ansible-galaxy install -r tests/requirements.yml -p ./tests/requirements
 
       - name: Test singlehost.
-        run: |
-          ansible-playbook tests/test-singlehost.yml -i tests/inventory/singlehost
+        run: ansible-playbook tests/test-singlehost.yml -i tests/inventory/singlehost -v
 
       - name: Test multihost.
-        run: |
-          ansible-playbook tests/test-multihost.yml -i tests/inventory/multihost
+        run: ansible-playbook tests/test-multihost.yml -i tests/inventory/multihost -v
 
   lint:
     name: "Lint (${{ matrix.NAME }})"

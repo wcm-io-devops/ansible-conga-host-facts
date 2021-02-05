@@ -17,6 +17,16 @@
     - "'ec2' not in group_names"  # 'default' static inventory is used
     - "'openstack' not in group_names"  # 'default' static inventory is used
 
+- name: Debug _host_pattern_variants
+  debug:
+    var: _host_pattern_variant
+    verbosity: 1
+
+- name: Debug _instance_conga_nodes
+  debug:
+    var: _instance_conga_nodes
+    verbosity: 1
+
 - name: "Ensure that host pattern is only for one variant when multiple nodes exist on one machine."
   assert:
     that:
