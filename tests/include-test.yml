@@ -1,6 +1,7 @@
 ---
 - name: "Test conga host facts for {{ host_pattern }}"
   hosts: "{{ host_pattern }}"
+  gather_facts: no
   vars:
     conga_environment: test
     conga_role_mapping: aem-cms
