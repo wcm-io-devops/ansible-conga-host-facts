@@ -4,18 +4,6 @@
     pattern: "{{ conga_host_facts_pattern }}"
     fact_name: "_host_pattern_variants"
 
-- name: Debug _host_pattern_variants
-  debug:
-    var: _host_pattern_variants
-    verbosity: 1
-
-- name: Debug _host_pattern_variants - details
-  debug:
-    msg:
-      - "type: {{ _host_pattern_variants | type_debug }}"
-      - "length: {{ _host_pattern_variants | length }}"
-    verbosity: 1
-
 - name: "Use inventory_ec2."
   include_tasks: "inventory_ec2.yml"
   when: "'ec2' in group_names"  # aws inventory is used
