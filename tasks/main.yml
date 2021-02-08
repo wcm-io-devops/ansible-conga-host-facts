@@ -4,6 +4,10 @@
     pattern: "{{ conga_host_facts_pattern }}"
     fact_name: "_host_pattern_variants"
 
+- name: "Debug _host_pattern_variants"
+  debug:
+    msg: "{{ _host_pattern_variants }}"
+
 - name: "Use inventory_ec2."
   include_tasks: "inventory_ec2.yml"
   when: "'ec2' in group_names"  # aws inventory is used
@@ -39,6 +43,14 @@
     mappings: "{{ _instance_conga_variant_node_mapping_list }}"
     fact_name: "_instance_conga_variant_node_mapping"
   when: _instance_conga_variant_node_mapping_list | length > 0
+
+- name: "_instance_conga_variant_node_mapping_list"
+  debug:
+    var: _instance_conga_variant_node_mapping_list
+
+- name: "_instance_conga_variant_node_mapping2"
+  debug:
+    var: _instance_conga_variant_node_mapping
 
 - name: "set conga_node (one node on host)."
   set_fact:

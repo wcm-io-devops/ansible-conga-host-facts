@@ -43,6 +43,9 @@ class ActionModule(ActionBase):
         except AnsibleOptionsError as err:
             return self._fail_result(result, err.message)
 
+        display.vv("mappings: %s" % (mappings))
+        display.vv("fact_name: %s" % (fact_name))
+
         result_mappings = {}
 
         for mapping in mappings:
@@ -51,6 +54,8 @@ class ActionModule(ActionBase):
             display.vv("mapping_parts: %s" % (mapping_parts))
 
             result_mappings[mapping_parts[0]] = mapping_parts[1]
+
+        display.vv("result_mappings: %s" % (result_mappings))
 
         result = {
             "ansible_facts" : {

@@ -1,8 +1,4 @@
 ---
-- name: "ec2: Initialize default facts."
-  set_fact:
-    _instance_conga_variant_node_mapping: {}
-
 - name: "ec2: Get ec2 instance facts for current instance."
   ec2_instance_facts:
     filters:
