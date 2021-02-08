@@ -2,9 +2,7 @@
 - name: "Set host_pattern facts."
   set_fact:
     # get the conga_variants from the host pattern
-    _host_pattern_variants: "{{ conga_host_facts_pattern.split(':') | list
-                            | map('regex_replace', '.*conga_variants_', '')
-                            | list }}"
+    _host_pattern_variants: "{{ conga_host_facts_pattern.split(':') | map('regex_replace', '.*conga_variants_', '') | list }}"
 
 - name: Debug _host_pattern_variants
   debug:
