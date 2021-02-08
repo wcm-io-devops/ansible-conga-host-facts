@@ -6,7 +6,7 @@
     conga_role_mapping: aem-cms
   roles:
 
-    - role: ansible-conga-host-facts
+    - role: wcm_io_devops.conga_host_facts
       conga_host_facts_pattern: "{{ host_pattern }}"
 
     - role: wcm_io_devops.conga_facts
