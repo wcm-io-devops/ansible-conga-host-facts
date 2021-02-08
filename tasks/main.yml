@@ -111,8 +111,8 @@
 - name: "Ensure that _host_pattern_variants is a list"
   assert:
     that:
-      - _host_pattern_variants is list
-    msg: _host_pattern_variants is not a list.
+      - _host_pattern_variants | type_debug == 'list'
+    msg: "host_pattern_variants is not a list (actual type: {{ _host_pattern_variants | type_debug }})"
 
 - name: "Ensure that host pattern is only for one variant when multiple nodes exist on one machine."
   assert:
