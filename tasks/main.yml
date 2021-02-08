@@ -108,6 +108,12 @@
       - "length: {{ _instance_conga_variant_node_mapping_list | length }}"
     verbosity: 1
 
+- name: "Ensure that _host_pattern_variants is a list"
+  assert:
+    that:
+      - _host_pattern_variants is a list
+    msg: _host_pattern_variants is not a list.
+
 - name: "Ensure that host pattern is only for one variant when multiple nodes exist on one machine."
   assert:
     that:
