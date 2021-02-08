@@ -13,4 +13,4 @@
 
 - import_playbook: include-test.yml
   vars:
-    host_pattern: "aem-author:aem-publish"
+    host_pattern: "conga_variants_aem-author:conga_variants_aem-publish"

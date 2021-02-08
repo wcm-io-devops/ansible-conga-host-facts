@@ -7,3 +7,9 @@ multihost-author
 
 [aem-publish]
 multihost-publish
+
+[conga_variants_aem-author]
+multihost-author
+
+[conga_variants_aem-publish]
+multihost-publish
