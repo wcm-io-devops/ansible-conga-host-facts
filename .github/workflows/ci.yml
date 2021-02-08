@@ -90,10 +90,10 @@ jobs:
           ansible-galaxy install -r tests/requirements.yml -p ./tests/requirements
 
       - name: Test singlehost.
-        run: ansible-playbook tests/test-singlehost.yml -i tests/inventory/singlehost -v
+        run: ansible-playbook tests/test-singlehost.yml -i tests/inventory/singlehost -vvv
 
       - name: Test multihost.
-        run: ansible-playbook tests/test-multihost.yml -i tests/inventory/multihost -v
+        run: ansible-playbook tests/test-multihost.yml -i tests/inventory/multihost -vvv
 
   lint:
     name: "Lint (${{ matrix.NAME }})"
