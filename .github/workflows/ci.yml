@@ -67,7 +67,7 @@ jobs:
       - name: Set up Python 3.
         uses: actions/setup-python@v2
         with:
-          python-version: '${{ matrix.PYTHON_VERSION }'
+          python-version: '${{ matrix.PYTHON_VERSION }}'
 
       - name: Install pip tools.
         run: |
