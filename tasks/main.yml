@@ -35,10 +35,9 @@
   when: _instance_conga_nodes | length > 1
 
 - name: "Set instance_conga_variant_node_mapping."
-  set_fact:
-    _instance_conga_variant_node_mapping: "{{ _instance_conga_variant_node_mapping
-                                              | combine({ item.split('=')[0] : item.split('=')[1] }) }}"
-  with_items: "{{ _instance_conga_variant_node_mapping_list }}"
+  conga_variant_node_mapping_util:
+    mappings: "{{ _instance_conga_variant_node_mapping_list }}"
+    fact_name: "_instance_conga_variant_node_mapping"
   when: _instance_conga_variant_node_mapping_list | length > 0
 
 - name: "set conga_node (one node on host)."
