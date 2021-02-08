@@ -25,14 +25,29 @@
     var: conga_host_facts_pattern.split(':')
     verbosity: 1
 
+- name: Debug _host_pattern_variant step 1 - type
+  debug:
+    var: conga_host_facts_pattern.split(':') | type_debug
+    verbosity: 1
+
 - name: Debug _host_pattern_variant step 2
   debug:
     var: conga_host_facts_pattern.split(':') | map('regex_replace', '.*conga_variants_', '')
     verbosity: 1
 
+- name: Debug _host_pattern_variant step 2 - type
+  debug:
+    var: conga_host_facts_pattern.split(':') | map('regex_replace', '.*conga_variants_', '') | type_debug
+    verbosity: 1
+
 - name: Debug _host_pattern_variant step 3
   debug:
     var: conga_host_facts_pattern.split(':') | map('regex_replace', '.*conga_variants_', '') | list
+    verbosity: 1
+
+- name: Debug _host_pattern_variant step 3 - type
+  debug:
+    var: conga_host_facts_pattern.split(':') | map('regex_replace', '.*conga_variants_', '') | list | type_debug
     verbosity: 1
 
 
@@ -41,9 +56,22 @@
     var: conga_host_facts_pattern
     verbosity: 1
 
+- name: Debug conga_host_facts_pattern - details
+  debug:
+    msg:
+      - "type: {{ conga_host_facts_pattern | type_debug }}"
+    verbosity: 1
+
 - name: Debug _host_pattern_variants
   debug:
     var: _host_pattern_variants
+    verbosity: 1
+
+- name: Debug _host_pattern_variants - details
+  debug:
+    msg:
+      - "type: {{ _host_pattern_variants | type_debug }}"
+      - "length: {{ _host_pattern_variants | length }}"
     verbosity: 1
 
 - name: Debug _instance_conga_nodes
@@ -51,9 +79,23 @@
     var: _instance_conga_nodes
     verbosity: 1
 
+- name: Debug _instance_conga_nodes - details
+  debug:
+    msg:
+      - "type: {{ _instance_conga_nodes | type_debug }}"
+      - "length: {{ _instance_conga_nodes | length }}"
+    verbosity: 1
+
 - name: Debug _instance_conga_variant_node_mapping_list
   debug:
     var: _instance_conga_variant_node_mapping_list
+    verbosity: 1
+
+- name: Debug _instance_conga_variant_node_mapping_list - details
+  debug:
+    msg:
+      - "type: {{ _instance_conga_variant_node_mapping_list | type_debug }}"
+      - "length: {{ _instance_conga_variant_node_mapping_list | length }}"
     verbosity: 1
 
 - name: "Ensure that host pattern is only for one variant when multiple nodes exist on one machine."
