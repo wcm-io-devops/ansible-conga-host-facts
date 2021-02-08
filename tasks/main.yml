@@ -25,6 +25,16 @@
     var: conga_host_facts_pattern.split(':')
     verbosity: 1
 
+- name: Debug _host_pattern_variant step 1.1
+  debug:
+    var: conga_host_facts_pattern.split(':') | list
+    verbosity: 1
+
+- name: Debug _host_pattern_variant step 1.2
+  debug:
+    var: conga_host_facts_pattern.split(':') | list | length
+    verbosity: 1
+
 - name: Debug _host_pattern_variant step 1 - type
   debug:
     var: conga_host_facts_pattern.split(':') | type_debug
