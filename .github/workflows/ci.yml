@@ -23,11 +23,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - NAME: min_ansible_version (Python 3.7)
+          - NAME: min_ansible_version @ Python 3.7
             ANSIBLE_VERSION: "==2.7.*"
             ANSIBLE_LINT_VERSION: "==4.2.*"
             PYTHON_VERSION: "3.7"
-          - NAME: latest (Python 3.x)
+          - NAME: latest @ Python 3.x
             ANSIBLE_VERSION: ""
             ANSIBLE_LINT_VERSION: ""
             PYTHON_VERSION: "3.x"
