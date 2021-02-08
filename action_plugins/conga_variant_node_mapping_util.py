@@ -43,6 +43,7 @@ class ActionModule(ActionBase):
         except AnsibleOptionsError as err:
             return self._fail_result(result, err.message)
 
+        display.vv("mappings type: %s" % (type(mappings).__name__))
         display.vv("mappings: %s" % (mappings))
         display.vv("fact_name: %s" % (fact_name))
 
