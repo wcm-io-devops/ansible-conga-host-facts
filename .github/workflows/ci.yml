@@ -1,0 +1,174 @@
+---
+name: CI
+
+env:
+  ROLE_NAME: wcm_io_devops.conga_host_facts
+
+defaults:
+  run:
+    working-directory: 'wcm_io_devops.conga_host_facts'
+
+'on':
+  pull_request:
+  push:
+    branches:
+      - master
+      - "feature/migrate-to-github-actions"
+
+jobs:
+
+  test:
+    name: "Test (${{ matrix.NAME }})"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - NAME: min_ansible_version
+            ANSIBLE_VERSION: "==2.7.*"
+            ANSIBLE_LINT_VERSION: "==4.2.*"
+            PYTHON_VERSION: "3.7"
+          - NAME: latest
+            ANSIBLE_VERSION: ""
+            ANSIBLE_LINT_VERSION: ""
+            PYTHON_VERSION: "3.x"
+
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+        with:
+          path: '${{ env.ROLE_NAME }}'
+
+      - name: Cache PIP
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.ANSIBLE_VERSION }}-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.ANSIBLE_VERSION }}-
+
+      - name: Create ansible.cfg
+        run: "printf '[defaults]\nroles_path=./tests/requirements/:../' > ansible.cfg"
+
+      # Set up environment with Java and Maven
+      - name: Setup JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+
+      # Set up dependency cache
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v2
+        with:
+          python-version: '${matrix.PYTHON_VERSION}'
+
+      - name: Install pip tools.
+        run: |
+          pip3 install wheel --upgrade
+
+      - name: Install test dependencies.
+        run: >
+          pip3 install
+          ansible${{ matrix.ANSIBLE_VERSION }}
+          ansible-lint${{ matrix.ANSIBLE_LINT_VERSION }}
+          --upgrade
+
+      - name: Dump ansible version
+        run: ansible --version
+
+      - name: Install role requirements.
+        run: |
+          pip3 install -r requirements.txt
+
+      - name: Install Galaxy requirements.
+        run:
+          ansible-galaxy install -r tests/requirements.yml -p ./tests/requirements
+
+      - name: Test singlehost.
+        run: ansible-playbook tests/test-singlehost.yml -i tests/inventory/singlehost -vvv
+
+      - name: Test multihost.
+        run: ansible-playbook tests/test-multihost.yml -i tests/inventory/multihost -vvv
+
+  lint:
+    name: "Lint (${{ matrix.NAME }})"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - NAME: min_ansible_version
+            ANSIBLE_VERSION: "==2.7.*"
+            ANSIBLE_LINT_VERSION: "==4.2.*"
+          - NAME: latest
+            ANSIBLE_VERSION: ""
+            ANSIBLE_LINT_VERSION: ""
+
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+        with:
+          path: '${{ env.ROLE_NAME }}'
+
+      - name: Cache PIP
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.ANSIBLE_VERSION }}-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.ANSIBLE_VERSION }}-
+
+      - name: Create ansible.cfg
+        run: "printf '[defaults]\nroles_path=./tests/requirements/:../' > ansible.cfg"
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install pip tools.
+        run: |
+          pip3 install wheel --upgrade
+
+      - name: Install test dependencies.
+        run: >
+          pip3 install yamllint
+          ansible${{ matrix.ANSIBLE_VERSION }}
+          ansible-lint${{ matrix.ANSIBLE_LINT_VERSION }}
+          --upgrade
+
+      - name: Install role requirements.
+        run: |
+          pip3 install -r requirements.txt
+
+      - name: Install Galaxy requirements.
+        run: |
+          ansible-galaxy install -r tests/requirements.yml -p ./tests/requirements
+
+      - name: Lint code.
+        run: |
+          yamllint .
+          ansible-lint
+
+      - name: Test syntax.
+        run: |
+          ansible-playbook tests/test-singlehost.yml -i tests/inventory/singlehost --syntax-check
+          ansible-playbook tests/test-multihost.yml -i tests/inventory/multihost --syntax-check
+
+  galaxy:
+    name: "Ansible Galaxy import"
+    needs:
+      - lint
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger a new import on Galaxy.
+        uses: robertdebock/galaxy-action@affc5472cd0b08f64a51eafba49b08898c1bbeb8
+        with:
+          galaxy_api_key: ${{ secrets.GALAXY_API_KEY }}
