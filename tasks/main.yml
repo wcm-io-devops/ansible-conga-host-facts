@@ -32,7 +32,7 @@
     _instance_conga_variant_node_mapping: "{{ _instance_conga_variant_node_mapping
                                               | combine({ item.split('=')[0] : item.split('=')[1] }) }}"
   with_items: "{{ _instance_conga_variant_node_mapping_list }}"
-  when: _instance_conga_variant_node_mapping_list | length > 0
+  when: _instance_conga_variant_node_mapping_list | length > 1
 
 - name: "set conga_node (one node on host)."
   set_fact:
