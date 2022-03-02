@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   role_name: conga_host_facts
+  namespace: wcm_io_devops
   author: Tobias Richter
   description: Utility role for determing facts for conga ansible automation based on inventory variables
   company: pro!vision
